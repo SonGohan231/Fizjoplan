@@ -11,15 +11,17 @@
       "versionCode": 1,
       "permissions": []
     },
-    "plugins": [
-      "expo-print"
-    ],
     "extra": {
       "supabaseUrl": "",
       "supabaseAnonKey": "",
       "eas": {
-        "projectId": "a5580952-5f46-41e5-aa42-0a806d139eb0"
+        "projectId": "bfeec08b-b102-4c89-adf6-a378c90de3d9"
       }
+    },
+    "owner": "arnoldjuhasek",
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "resizeMode": "contain"
     }
   }
 }
