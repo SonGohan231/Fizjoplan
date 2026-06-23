@@ -1,0 +1,17 @@
+[
+  {
+    "title_en": "Standing calf raise",
+    "description_en": "Stand tall, slowly raise your heels and lower with control. Hold the wall for balance.",
+    "progression_en": "Progress to single leg.",
+    "regression_en": "Reduce the range of motion.",
+    "precautions_en": "Stop if it increases pain.",
+    "body_region": "ankle_foot",
+    "difficulty_level": 1
+  },
+  {
+    "title_en": "Wall slide (shoulder)",
+    "description_en": "Slide your arms up the wall keeping contact, then lower slowly. Keep your back straight.",
+    "body_region": "shoulder",
+    "difficulty_level": 2
+  }
+]

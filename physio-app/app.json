@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "FizjoPlan",
+    "slug": "fizjoplan",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "fizjoplan",
+    "android": {
+      "package": "com.fizjoplan.app",
+      "versionCode": 1,
+      "permissions": []
+    },
+    "plugins": [
+      "expo-print"
+    ],
+    "extra": {
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
+    }
+  }
+}

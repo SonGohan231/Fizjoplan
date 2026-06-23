@@ -1,0 +1,34 @@
+[
+  {
+    "title_pl": "Odwodzenie biodra w leżeniu na boku",
+    "title_en": "Side lying hip abduction",
+    "description_pl": "Leżąc na boku, unieś górną nogę wyprostowaną do około 30°, utrzymując miednicę stabilnie. Opuść powoli z kontrolą.",
+    "description_en": "Lying on your side, lift the top leg to ~30 degrees keeping the pelvis still. Lower slowly with control.",
+    "body_region": "hip",
+    "condition_tags": ["gluteal_tendinopathy", "hip_pain"],
+    "tissue_tags": ["muscle", "tendon"],
+    "goal_tags": ["strength", "stability"],
+    "difficulty_level": 2,
+    "equipment": ["mat"],
+    "position": "side_lying",
+    "sets": 3, "reps": 12, "frequency_per_week": 4,
+    "progression": "Dodaj taśmę oporową wokół ud.",
+    "regression": "Zmniejsz zakres uniesienia."
+  },
+  {
+    "title_pl": "Ślizg nerwu pośrodkowego",
+    "title_en": "Median nerve glide",
+    "description_pl": "Delikatnie naprzemiennie prostuj nadgarstek i palce, a następnie zginaj, płynnie „ślizgając” nerw. Bez bólu.",
+    "description_en": "Gently alternate wrist and finger extension and flexion to floss the median nerve. Pain-free.",
+    "body_region": "wrist_hand",
+    "condition_tags": ["carpal_tunnel"],
+    "tissue_tags": ["nerve"],
+    "goal_tags": ["neural_glide", "mobility"],
+    "difficulty_level": 1,
+    "equipment": ["none"],
+    "position": "seated",
+    "sets": 2, "reps": 10, "frequency_per_week": 6,
+    "progression": "Zwiększ liczbę powtórzeń do 15.",
+    "regression": "Zmniejsz zakres ruchu."
+  }
+]

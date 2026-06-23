@@ -1,0 +1,91 @@
+name: Android APK
+
+# Builds an installable Android APK and uploads it as a downloadable artifact.
+#
+# Primary job (build-apk): no secrets required. It runs `expo prebuild` + Gradle
+# `assembleRelease`. The Expo Android template signs the release build with the
+# debug keystore by default, so the resulting APK installs on any device for
+# testing. Download it from the run's "Artifacts" section.
+#
+# Optional job (eas-cloud): runs only if you add an EXPO_TOKEN repo secret. It
+# triggers an EAS cloud build using the `preview` profile in eas.json.
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    name: Build APK (Gradle, no secrets)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: |
+          npm install --no-audit --no-fund
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Run tests if present
+        run: npm test --if-present
+
+      - name: Expo prebuild (generate android/)
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build release APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fizjoplan-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+  eas-cloud:
+    name: EAS cloud build (optional, needs EXPO_TOKEN)
+    runs-on: ubuntu-latest
+    if: ${{ secrets.EXPO_TOKEN != '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: EAS build (preview = APK)
+        run: eas build --platform android --profile preview --non-interactive --wait
