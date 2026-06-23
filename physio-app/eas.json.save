@@ -1,0 +1,82 @@
+cat > eas.json <<'EOF'{ 
+  "cli": {
+{ "version": ">= 5.0.0" 
+  "cli": { }, "build": {
+    "version": ">= 5.0.0", 
+      "preview": { 
+      "android": {
+    "appVersionSource": 
+    "local" "buildType": 
+    "apk"
+  }, },
+  "build": { 
+  "distribution": 
+  "internal"
+    "preview": { }, 
+    "production": {
+      "android": { 
+        "android": { 
+        "buildType": 
+        "app-bundle" 
+        "buildType": "apk" 
+        }
+      }, }
+      "distribution": 
+  "internal" }, "submit": 
+  {
+    }, "production": {}
+    "production": { } 
+      "android": {}
+        "buildType": 
+        "app-bundle"
+      }
+    }
+  },
+cat > eas.json <<'EOF' 
+    "submit": { 
+    "production": {}
+{ } "cli": {} "version": 
+    ">= 5.0.0",EOF 
+    "appVersionSource": 
+    "local"
+  },
+  "build": { "preview": { 
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": 
+      "internal"
+    },
+    "production": { 
+      "android": {
+        "buildType": 
+        "app-bundle"
+      }
+    }
+  },
+  "submit": { 
+    "production": {}
+  }
+}
+EOF
+
+cat > eas.json <<'EOF' { "cli": { 
+    "version": ">= 5.0.0", 
+    "appVersionSource": "local"
+  },
+  "build": { "preview": { 
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    },
+    "production": { "android": { 
+        "buildType": "app-bundle"
+      }
+    }
+  },
+  "submit": { "production": {}
+  }
+}
+EOF
+
