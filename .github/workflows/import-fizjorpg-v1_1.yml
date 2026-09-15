@@ -1,0 +1,59 @@
+name: Import FizjoRPG Atlas v1.1
+
+on:
+  push:
+    branches: [fizjorpg-atlas-v1]
+    paths:
+      - '.github/workflows/import-fizjorpg-v1_1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-game:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download verified build
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JGQx06i0dP8dCxeDB39wmIRZBq/396ae85e-9ee0-4b8a-ae35-c80318f7bc39.zip' -o FizjoRPG_Atlas_of_Knowledge_v1_1_AUDIO.zip
+          echo 'd14c9aa81fa22ccecdaa2ba48d4d42f7b0cf83d8d21e20a28c965b8b8d474a2d  FizjoRPG_Atlas_of_Knowledge_v1_1_AUDIO.zip' | sha256sum -c -
+          unzip -t FizjoRPG_Atlas_of_Knowledge_v1_1_AUDIO.zip
+      - name: Validate JavaScript and audio
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/fizjorpg && mkdir /tmp/fizjorpg
+          unzip -q FizjoRPG_Atlas_of_Knowledge_v1_1_AUDIO.zip -d /tmp/fizjorpg
+          node --check /tmp/fizjorpg/game.js
+          node --check /tmp/fizjorpg/knowledge.js
+          test "$(find /tmp/fizjorpg/audio -name '*.wav' | wc -l)" -eq 5
+      - name: Upload playable package
+        uses: actions/upload-artifact@v4
+        with:
+          name: FizjoRPG-Atlas-v1-1-AUDIO
+          path: FizjoRPG_Atlas_of_Knowledge_v1_1_AUDIO.zip
+          if-no-files-found: error
+      - name: Save complete source on branch
+        run: |
+          set -euo pipefail
+          rm -rf fizjorpg-atlas-v1/source-v1.1
+          mkdir -p fizjorpg-atlas-v1/source-v1.1
+          cp -a /tmp/fizjorpg/. fizjorpg-atlas-v1/source-v1.1/
+          cat > fizjorpg-atlas-v1/README.md <<'EOF'
+          # FizjoRPG — Atlas of Knowledge
+
+          Grywalny vertical slice: 50% roguelike/dungeon crawler, 25% JRPG, 25% długoterminowe RPG/MMO.
+
+          Zawiera 8 światów wiedzy, proceduralne lochy, przeciwników i bossów, skrzynie i sekrety, loot i ekwipunek, osobne drzewka wiedzy, kodeks/słownik, questy, zapis postępu oraz naukę wplecioną w walkę. Światy obejmują fizjoterapię/testy, anatomię, fizjologię, psychologię, medycynę bez farmakologii, fizykę, naturę i ciekawostki.
+
+          v1.1 zawiera osadzone efekty Mirelo: cios, skrzynia, sekret, level-up i wejście bossa. Muzyka jest proceduralna WebAudio i zmienia charakter zależnie od świata.
+
+          Treści kliniczne i medyczne są edukacyjne; gra nie jest narzędziem do podejmowania decyzji diagnostycznych ani terapeutycznych dla konkretnego pacjenta.
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fizjorpg-atlas-v1
+          git commit -m 'Save complete FizjoRPG Atlas v1.1 source with audio' || exit 0
+          git push
