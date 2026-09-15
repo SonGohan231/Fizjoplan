@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f4c5c">
+<meta name="description" content="FizjoGabinet — baza kliniczna dla fizjoterapeuty: badanie, różnicowanie, testy, protokoły terapii i 640 ćwiczeń w 4 etapach.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>FizjoGabinet</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="appShell">
+  <aside class="sidebar" aria-label="Nawigacja główna">
+    <div class="brand"><div class="brandmark">FG</div><div><strong>FizjoGabinet</strong><small>baza kliniczna</small></div></div>
+    <nav class="side-nav">
+      <button data-route="home" class="navbtn active"><span>⌂</span> Start</button>
+      <button data-route="exam" class="navbtn"><span>✓</span> Badanie</button>
+      <button data-route="protocols" class="navbtn"><span>▤</span> Protokoły</button>
+      <button data-route="tests" class="navbtn"><span>＋</span> Testy</button>
+      <button data-route="exercises" class="navbtn"><span>◎</span> Ćwiczenia</button>
+    </nav>
+    <div class="sidebar-note">Narzędzie wspiera rozumowanie kliniczne. Nie zastępuje badania lekarskiego ani kwalifikacji do procedur inwazyjnych.</div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <button class="iconbtn mobile-only" id="homeBtn" aria-label="Start">FG</button>
+      <div class="top-title" id="topTitle">Start</div>
+      <button class="installbtn" id="installBtn" hidden>Zainstaluj</button>
+    </header>
+    <div id="screen" class="screen"></div>
+  </main>
+</div>
+<nav class="bottom-nav" aria-label="Nawigacja mobilna">
+  <button data-route="home" class="navbtn active"><span>⌂</span><small>Start</small></button>
+  <button data-route="exam" class="navbtn"><span>✓</span><small>Badanie</small></button>
+  <button data-route="protocols" class="navbtn"><span>▤</span><small>Protokoły</small></button>
+  <button data-route="tests" class="navbtn"><span>＋</span><small>Testy</small></button>
+  <button data-route="exercises" class="navbtn"><span>◎</span><small>Ćwiczenia</small></button>
+</nav>
+<script src="data.js"></script>
+<script src="exercise-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

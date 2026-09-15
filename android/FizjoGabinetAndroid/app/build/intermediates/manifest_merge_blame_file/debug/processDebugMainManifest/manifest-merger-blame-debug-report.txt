@@ -1,0 +1,135 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="pl.fizjogabinet.app.debug"
+4    android:versionCode="7"
+5    android:versionName="7.0-debug" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <permission
+11-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+12        android:name="pl.fizjogabinet.app.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+12-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+13        android:protectionLevel="signature" />
+13-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+14
+15    <uses-permission android:name="pl.fizjogabinet.app.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+15-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+16
+17    <application
+17-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:2:5-23:19
+18        android:allowBackup="true"
+18-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:3:9-35
+19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+19-->[androidx.core:core:1.15.0] /home/runner/.gradle/caches/8.9/transforms/d0ad7bf5f29ce1bd1825e5c28d1ed036/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+20        android:debuggable="true"
+21        android:extractNativeLibs="false"
+22        android:icon="@mipmap/ic_launcher"
+22-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:6:9-43
+23        android:label="FizjoGabinet"
+23-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:4:9-37
+24        android:roundIcon="@mipmap/ic_launcher_round"
+24-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:7:9-54
+25        android:supportsRtl="true"
+25-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:8:9-35
+26        android:theme="@style/Theme.FizjoGabinet" >
+26-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:5:9-50
+27        <activity
+27-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:9:9-74
+28            android:name="pl.fizjogabinet.app.PdfActivity"
+28-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:9:19-46
+29            android:exported="false" />
+29-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:9:47-71
+30        <activity
+30-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:10:9-15:20
+31            android:name="pl.fizjogabinet.app.MainActivity"
+31-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:10:19-47
+32            android:exported="true" >
+32-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:10:48-71
+33            <intent-filter>
+33-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:11:13-14:29
+34                <action android:name="android.intent.action.MAIN" />
+34-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:12:17-69
+34-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:12:25-66
+35
+36                <category android:name="android.intent.category.LAUNCHER" />
+36-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:13:17-77
+36-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:13:27-74
+37            </intent-filter>
+38        </activity>
+39
+40        <provider
+41            android:name="androidx.core.content.FileProvider"
+41-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:17:13-62
+42            android:authorities="pl.fizjogabinet.app.debug.files"
+42-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:18:13-57
+43            android:exported="false"
+43-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:19:13-37
+44            android:grantUriPermissions="true" >
+44-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:20:13-47
+45            <meta-data
+45-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:21:13-112
+46                android:name="android.support.FILE_PROVIDER_PATHS"
+46-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:21:24-74
+47                android:resource="@xml/file_paths" />
+47-->/home/runner/work/Fizjoplan/Fizjoplan/android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml:21:75-109
+48        </provider>
+49        <provider
+49-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+50            android:name="androidx.startup.InitializationProvider"
+50-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:25:13-67
+51            android:authorities="pl.fizjogabinet.app.debug.androidx-startup"
+51-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:26:13-68
+52            android:exported="false" >
+52-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:27:13-37
+53            <meta-data
+53-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+54                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+54-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+55                android:value="androidx.startup" />
+55-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+56        </provider>
+57
+58        <receiver
+58-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+59            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+59-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+60            android:directBootAware="false"
+60-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+61            android:enabled="true"
+61-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+62            android:exported="true"
+62-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+63            android:permission="android.permission.DUMP" >
+63-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+64            <intent-filter>
+64-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+65                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+65-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+65-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+66            </intent-filter>
+67            <intent-filter>
+67-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+68                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+68-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+68-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+69            </intent-filter>
+70            <intent-filter>
+70-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+71                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+71-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+71-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+72            </intent-filter>
+73            <intent-filter>
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+74                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/runner/.gradle/caches/8.9/transforms/befa3ec04975a08870b0fda6e4950adf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+75            </intent-filter>
+76        </receiver>
+77    </application>
+78
+79</manifest>
