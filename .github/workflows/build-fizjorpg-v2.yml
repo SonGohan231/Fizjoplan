@@ -1,0 +1,64 @@
+name: Build FizjoRPG v2 GAMEPLAY FIRST
+
+on:
+  push:
+    branches: [fizjorpg-v2-gameplay-first]
+    paths:
+      - 'fizjorpg-v2/PATCH.zip'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fizjorpg-v2-gameplay-first
+
+      - name: Assemble v2 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf fizjorpg-v2/source-v2
+          mkdir -p fizjorpg-v2/source-v2
+          cp -a fizjorpg-atlas-v1/source-v1.1/. fizjorpg-v2/source-v2/
+          rm -f fizjorpg-v2/source-v2/game.js
+          unzip -oq fizjorpg-v2/PATCH.zip -d fizjorpg-v2/source-v2
+          test -f fizjorpg-v2/source-v2/index.html
+          test -f fizjorpg-v2/source-v2/data.js
+          test -f fizjorpg-v2/source-v2/knowledge.js
+          test -f fizjorpg-v2/source-v2/audio/boss.wav
+          for f in fizjorpg-v2/source-v2/src/*.js; do node --check "$f"; done
+
+      - name: Package verified build
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f FizjoRPG_v2_GAMEPLAY_FIRST.zip
+          cd fizjorpg-v2
+          zip -qr ../FizjoRPG_v2_GAMEPLAY_FIRST.zip source-v2
+          cd ..
+          unzip -t FizjoRPG_v2_GAMEPLAY_FIRST.zip >/dev/null
+          sha256sum FizjoRPG_v2_GAMEPLAY_FIRST.zip
+
+      - name: Save complete source on branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fizjorpg-v2/source-v2
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save complete FizjoRPG v2 GAMEPLAY FIRST source'
+            git push origin HEAD:fizjorpg-v2-gameplay-first
+          fi
+
+      - name: Upload final ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: FizjoRPG-v2-GAMEPLAY-FIRST
+          path: FizjoRPG_v2_GAMEPLAY_FIRST.zip
+          if-no-files-found: error
+          retention-days: 90
