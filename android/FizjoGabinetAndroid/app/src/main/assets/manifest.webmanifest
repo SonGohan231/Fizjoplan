@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#f5f8f8",
   "theme_color": "#0f4c5c",
-  "description": "Baza kliniczna fizjoterapeuty — badanie, testy, protokoły terapii i 640 ćwiczeń w 4 etapach.",
+  "description": "Baza kliniczna fizjoterapeuty — badanie, testy, protokoły, 660 ćwiczeń, notatki i tryb nauki.",
   "icons": [
     {
       "src": "icons/icon-192.png",

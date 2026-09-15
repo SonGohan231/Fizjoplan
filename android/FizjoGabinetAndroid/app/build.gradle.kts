@@ -10,13 +10,13 @@ android {
         applicationId = "pl.fizjogabinet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "7.0"
+        versionCode = 8
+        versionName = "8.0"
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix = ".debug"
+            applicationIdSuffix = ".v8"
             versionNameSuffix = "-debug"
         }
         release {
