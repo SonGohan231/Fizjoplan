@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07141f" />
+  <meta name="description" content="FizjoRPG — nauka przez eksplorację, walkę, loot, bossów i rozwój wiedzy." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>FizjoRPG: Atlas of Knowledge</title>
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="brand"><span class="sigil">Φ</span><div><b>FizjoRPG</b><small>Atlas of Knowledge</small></div></div>
+    <div class="hud-bars">
+      <div class="bar hp"><span id="hpBar"></span><em id="hpText">HP</em></div>
+      <div class="bar xp"><span id="xpBar"></span><em id="xpText">XP</em></div>
+    </div>
+    <div class="hud-stats"><span>⚔ <b id="atkText">5</b></span><span>🛡 <b id="defText">2</b></span><span>✦ <b id="insightText">0</b></span><span>◈ <b id="goldText">0</b></span></div>
+    <button id="menuBtn" class="hud-btn">☰</button>
+  </header>
+
+  <main id="gameWrap">
+    <canvas id="gameCanvas" width="960" height="640" aria-label="Plansza gry"></canvas>
+    <div id="toastLayer"></div>
+    <div id="floatLayer"></div>
+    <div id="bossBanner" class="boss-banner hidden"></div>
+  </main>
+
+  <aside id="sidePanel" class="panel hidden">
+    <div class="panel-head"><h2 id="panelTitle">Menu</h2><button class="close" data-close>×</button></div>
+    <div class="tabs">
+      <button data-tab="character" class="active">Postać</button>
+      <button data-tab="skills">Drzewka</button>
+      <button data-tab="inventory">Ekwipunek</button>
+      <button data-tab="codex">Kodeks</button>
+      <button data-tab="worlds">Światy</button>
+      <button data-tab="quests">Questy</button>
+      <button data-tab="settings">Ustawienia</button>
+    </div>
+    <div id="panelBody"></div>
+  </aside>
+
+  <section id="combatPanel" class="combat hidden">
+    <div class="combat-head"><div><small>STARcie</small><h2 id="enemyName">Przeciwnik</h2></div><div class="enemy-hp"><span id="enemyHpBar"></span></div></div>
+    <p id="combatLog">Twój ruch.</p>
+    <div class="combat-actions">
+      <button data-action="attack">⚔ Atak</button>
+      <button data-action="focus">✦ Wiedza</button>
+      <button data-action="skill">✧ Umiejętność</button>
+      <button data-action="item">◆ Przedmiot</button>
+      <button data-action="flee">↯ Ucieczka</button>
+    </div>
+  </section>
+
+  <section id="quizModal" class="modal hidden">
+    <div class="modal-card quiz-card">
+      <div class="quiz-top"><span id="quizDomain" class="badge">ANATOMIA</span><span id="quizReward">+XP</span></div>
+      <h2 id="quizQuestion">Pytanie</h2>
+      <p id="quizHint" class="hint"></p>
+      <div id="quizAnswers" class="answer-grid"></div>
+      <div id="quizExplain" class="explain hidden"></div>
+    </div>
+  </section>
+
+  <section id="worldModal" class="modal">
+    <div class="modal-card world-card">
+      <div class="eyebrow">Kroniki Atlasu</div>
+      <h1>FizjoRPG: Atlas of Knowledge</h1>
+      <p>Świat wiedzy rozpadł się na domeny. Każda kraina ma własnych strażników, relikty i sekrety. Pokonuj lochy, zdobywaj sprzęt i rozwijaj wiedzę — albo po prostu ruszaj na kolejne wyprawy.</p>
+      <div id="worldGrid" class="world-grid"></div>
+      <div class="world-foot"><button id="continueBtn" class="primary">Wejdź do odblokowanej krainy</button><button id="newRunBtn">Nowa wyprawa</button></div>
+    </div>
+  </section>
+
+  <div id="mobileControls" class="mobile-controls">
+    <button data-move="up">▲</button>
+    <div><button data-move="left">◀</button><button data-move="down">▼</button><button data-move="right">▶</button></div>
+    <button id="mobileInteract">◎</button>
+  </div>
+</div>
+<script src="data.js"></script>
+<script src="knowledge.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
