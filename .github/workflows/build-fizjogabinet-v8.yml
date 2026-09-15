@@ -1,0 +1,81 @@
+name: Build FizjoGabinet v8 Android APK
+
+on:
+  push:
+    branches: [android-apk-v8]
+    paths: ['.github/workflows/build-fizjogabinet-v8.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: android-apk-v8
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Apply verified v8 learning module
+        shell: bash
+        env:
+          OVERLAY_URL: 'https://sdmntprdenmarkeast.oaiusercontent.com/files/00000000-c530-8210-aaa7-2136f589e1f6/raw?se=2026-09-15T18%3A08%3A36Z&sp=r&sv=2026-02-06&sr=b&scid=ee75e6cc-be40-5907-9021-8d91f7e0e309&skoid=d294dba5-36f7-432b-aab8-935656489847&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-15T04%3A39%3A56Z&ske=2026-09-16T04%3A39%3A56Z&sks=b&skv=2026-02-06&sig=/1ZDCewc8eXZrC59Y9%2BI5H9i7uInZa%2Bc%2BUKw1ra7NjE%3D'
+          OVERLAY_SHA256: '8ebf56fbe1b77d1d028e9e4e2886154b810bfed5201b876b75ed1971ec29a520'
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/android/FizjoGabinetAndroid"
+          curl -fL --retry 3 --retry-delay 2 "$OVERLAY_URL" -o /tmp/v8-overlay.zip
+          echo "$OVERLAY_SHA256  /tmp/v8-overlay.zip" | sha256sum -c -
+          unzip -o -q /tmp/v8-overlay.zip -d "$ROOT/app/src/main/assets"
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('android/FizjoGabinetAndroid/app/build.gradle.kts')
+          s=p.read_text().replace('versionCode = 7','versionCode = 8').replace('versionName = "7.0"','versionName = "8.0"')
+          s=s.replace('applicationIdSuffix = ".debug"','applicationIdSuffix = ".v8"')
+          p.write_text(s)
+          p=Path('android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml')
+          s=p.read_text().replace('android:label="FizjoGabinet"','android:label="FizjoGabinet v8"')
+          if 'android.permission.VIBRATE' not in s:
+              s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">','<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n    <uses-permission android:name="android.permission.VIBRATE" />')
+          p.write_text(s)
+          PY
+          node --check "$ROOT/app/src/main/assets/v8.js"
+          grep -q 'v8.css' "$ROOT/app/src/main/assets/index.html"
+          grep -q 'v8.js' "$ROOT/app/src/main/assets/index.html"
+          test "$(find "$ROOT/app/src/main/assets/pdf_kategorie" -type f -name '*.pdf' | wc -l)" -eq 132
+
+      - name: Build APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd android/FizjoGabinetAndroid
+          gradle --no-daemon :app:assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/FizjoGabinet-v8-Android.apk"
+          jarsigner -verify "$GITHUB_WORKSPACE/FizjoGabinet-v8-Android.apk"
+          sha256sum "$GITHUB_WORKSPACE/FizjoGabinet-v8-Android.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: FizjoGabinet-v8-Android-APK
+          path: FizjoGabinet-v8-Android.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Save v8 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add android/FizjoGabinetAndroid/app/src/main/assets/index.html android/FizjoGabinetAndroid/app/src/main/assets/v8.js android/FizjoGabinetAndroid/app/src/main/assets/v8.css android/FizjoGabinetAndroid/app/src/main/assets/sw.js android/FizjoGabinetAndroid/app/src/main/assets/manifest.webmanifest android/FizjoGabinetAndroid/app/build.gradle.kts android/FizjoGabinetAndroid/app/src/main/AndroidManifest.xml
+          git commit -m 'FizjoGabinet v8: nauka, notatki, ustawienia i dark mode' || true
+          git push origin HEAD:android-apk-v8
