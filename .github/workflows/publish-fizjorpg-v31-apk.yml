@@ -1,0 +1,43 @@
+name: Publish FizjoRPG v3.1 APK
+
+on:
+  push:
+    branches:
+      - fizjorpg-v3-1-release
+    paths:
+      - .github/workflows/publish-fizjorpg-v31-apk.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout v3.1 branch
+        uses: actions/checkout@v4
+        with:
+          ref: fizjorpg-v3-1-release
+
+      - name: Download verified release from Higgsfield
+        run: |
+          set -euo pipefail
+          curl -fL 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JGQx06i0dP8dCxeDB39wmIRZBq/43a3ce77-a9c1-459d-a67f-0a62ab4905da.zip' -o /tmp/fizjorpg-v31.zip
+          rm -rf /tmp/fizjorpg-v31
+          mkdir -p /tmp/fizjorpg-v31
+          unzip -q /tmp/fizjorpg-v31.zip -d /tmp/fizjorpg-v31
+          echo '17f59d3fa054fe2168f76c63430838de8b94180facd27fddfde4c580f2667c99  /tmp/fizjorpg-v31/FizjoRPG-v3.1-WORLD-CONTENT-REFORGE-ANDROID16.apk' | sha256sum -c -
+
+      - name: Commit APK to release branch
+        run: |
+          set -euo pipefail
+          mkdir -p releases
+          cp /tmp/fizjorpg-v31/FizjoRPG-v3.1-WORLD-CONTENT-REFORGE-ANDROID16.apk releases/
+          cp /tmp/fizjorpg-v31/FizjoRPG-v3.1-VERIFY.md releases/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add releases/FizjoRPG-v3.1-WORLD-CONTENT-REFORGE-ANDROID16.apk releases/FizjoRPG-v3.1-VERIFY.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish verified FizjoRPG v3.1 Android 16 APK'
+            git push origin HEAD:fizjorpg-v3-1-release
+          fi
