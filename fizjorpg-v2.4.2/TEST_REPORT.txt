@@ -1,0 +1,32 @@
+FizjoRPG v2.4.2 — BALANCE & LEARNING CORRECTNESS
+Build date: 2026-09-16
+
+TRUTH TEST OK — 16/16 boss moves handled, 18 critical checks passed
+DEEP RUNS TEST OK — 12/12 checks passed
+HARDENING TEST OK — adaptive thresholds, anti-repeat, archetype deck, history retention
+RUNTIME SMOKE OK — pool 273, archetype guardian, threat 3
+BALANCE & LEARNING TEST OK {"legendaryBase":0.00526,"legendaryMaxLuck":0.00809,"conceptStage":6,"professionCap":20}
+
+JS syntax:
+OK src/audio.js
+OK src/combat.js
+OK src/config.js
+OK src/dungeon.js
+OK src/inventory.js
+OK src/knowledge-system.js
+OK src/main.js
+OK src/progression.js
+OK src/renderer.js
+OK src/rng.js
+OK src/state.js
+OK src/ui.js
+
+APK SHA256:
+589c733d9eb845d7860d8ce03b42790db751252b36a6daf8ef2bb3fb1d54c33b
+Source SHA256:
+0d98856bde223732f6706d2eb066aea71a05888608b246ffb8e66afa5efb7a51
+
+boss.wav SHA256:
+b8b2d4d900587ad6160bd42e590e51e823843c26c3c337bd7ade29d59da52a80
+boss_phase.wav SHA256:
+d9702b2c9290970635f063b2ac6686b55d807f317c680f6a366c782d053f0609
