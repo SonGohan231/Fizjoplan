@@ -18,6 +18,6 @@ Emulator Android 15 / API 35: zainstalowano kompilację debug, a zrzut potwierdz
 
 Przebiegi GitHub Actions: https://github.com/SonGohan231/Fizjoplan/actions/workflows/atlas-reborn.yml
 
-APK SHA-256: `f5649af3e7ef81d4d9aaff64216281afd3f244892ced6f0df77c2fd327cd3521`
+APK SHA-256: `daf837336e7fd733808e13766bc5e4caa7b007487f74d654e26f169af5ec5b19`
 
 Ograniczenie testu Android UIAutomator: WebView nie udostępnił drzewa HTML; obrazy oceniono wizualnie. Test przeglądarkowy korzystał z prawdziwych wejść, bez modyfikowania stanu gry.
