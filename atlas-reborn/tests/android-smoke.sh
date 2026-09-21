@@ -2,9 +2,20 @@
 set -euo pipefail
 OUT=atlas-reborn/tests/android-results
 mkdir -p "$OUT"
+trap 'adb logcat -d > "$OUT/logcat.txt"; adb exec-out screencap -p > "$OUT/final.png"' EXIT
 adb install -r atlas-reborn/android/app/build/outputs/apk/debug/app-debug.apk
 adb logcat -c
 adb shell am start -W -n pl.somaskan.atlasecharuchu/.MainActivity > "$OUT/launch.txt"
+sleep 12
+adb shell uiautomator dump /sdcard/window.xml
+adb pull /sdcard/window.xml "$OUT/title.xml"
+python3 - <<'PYTHON'
+import xml.etree.ElementTree as ET,re,subprocess
+for n in ET.parse('atlas-reborn/tests/android-results/title.xml').iter('node'):
+ if n.get('resource-id')=='android:id/ok':
+  x1,y1,x2,y2=map(int,re.findall(r'\d+',n.get('bounds')))
+  subprocess.run(['adb','shell','input','tap',str((x1+x2)//2),str((y1+y2)//2)],check=True)
+PYTHON
 sleep 12
 adb shell uiautomator dump /sdcard/window.xml
 adb pull /sdcard/window.xml "$OUT/title.xml"
