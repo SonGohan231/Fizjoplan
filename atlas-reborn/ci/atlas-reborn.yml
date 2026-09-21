@@ -41,7 +41,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10.2'
-      - run: sdkmanager "build-tools;35.0.1" "platforms;android-35"
+      - run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "build-tools;35.0.1" "platforms;android-35"'
       - run: gradle -p atlas-reborn/android assembleDebug
       - name: Enable KVM
         run: |
