@@ -13,7 +13,11 @@ export function validProfile(p){
  if(!isRecord(p.settings)||!['learning','adventure'].includes(p.settings.mode)||!isRecord(p.talents)||!['vitality','power'].every(k=>Number.isInteger(p.talents[k])&&number(p.talents[k],0,10))||!isRecord(p.knowledge)||!isRecord(p.quests)||!Array.isArray(p.history)||p.history.length>30)return false;
  for(const [id,k] of Object.entries(p.knowledge)){if(!CONCEPTS.some(c=>c.id===id)||!isRecord(k)||!number(k.right,0,1e6)||!number(k.wrong,0,1e6)||!number(k.streak,0,1e6)||!number(k.due,0,1e16))return false;}
  if(p.run){const r=p.run;if(!isRecord(r)||!WORLDS.some(w=>w.id===r.world)||!number(r.stage,0,4)||!Number.isInteger(r.stage)||!number(r.hp,0,999)||!number(r.maxHp,1,999)||r.hp>r.maxHp||!number(r.focus,0,6)||!number(r.seed,0,4294967295)||!number(r.potions,0,20)||!number(r.challenge,0,3)||!number(r.gold,0,1e6)||!number(r.xp,0,1e6)||!isRecord(r.done)||!Array.isArray(r.relics)||r.relics.some(id=>!RELICS.some(x=>x.id===id))||!Array.isArray(r.seen)||!Array.isArray(r.quizUsed)||!isRecord(r.pos)||!number(r.pos.x,0,24)||!number(r.pos.y,0,18))return false;
-  if(r.battle){const b=r.battle;if(!isRecord(b)||!number(b.hp,0,10000)||!number(b.maxHp,1,10000)||b.hp>b.maxHp||!number(b.turn,0,100000)||!number(b.attack,1,999)||!number(b.armor,0,100)||!Array.isArray(b.log)||!['strike','guard','heavy','drain','charge','heal'].includes(b.intent))return false;}
+  if(r.reward&&(!isRecord(r.reward)||typeof r.reward.title!=='string'||!Array.isArray(r.reward.choices)||r.reward.choices.some(id=>!RELICS.some(x=>x.id===id))))return false;
+  if(r.battle){const b=r.battle;if(!isRecord(b)||!number(b.hp,0,10000)||!number(b.maxHp,1,10000)||b.hp>b.maxHp||!number(b.turn,0,100000)||!number(b.attack,1,999)||!number(b.armor,0,100)||!Array.isArray(b.log)||!['strike','guard','heavy','drain','charge','heal'].includes(b.intent))return false;
+   if(b.quiz&&(!isRecord(b.quiz)||!CONCEPTS.some(c=>c.id===b.quiz.id&&c.world===r.world)||!['choice','recall','order'].includes(b.quiz.type)||!Array.isArray(b.quiz.options)||b.quiz.options.some(x=>typeof x!=='string')))return false;
+   if(b.feedback&&(!isRecord(b.feedback)||!CONCEPTS.some(c=>c.id===b.feedback.conceptId)||typeof b.feedback.expected!=='string'||typeof b.feedback.correct!=='boolean'))return false;
+  }
  }
  return true;
 }
