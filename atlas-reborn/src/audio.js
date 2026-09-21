@@ -1,0 +1,9 @@
+export class AudioSystem{
+ constructor(settings){this.settings=settings;this.ctx=null;this.ambient=null;this.timer=null;this.step=0;}
+ start(){try{this.ctx??=new (window.AudioContext||window.webkitAudioContext)();this.ctx.resume();if(!this.ambient){this.ambient=new Audio('assets/audio/sanctuary.wav');this.ambient.loop=true;this.ambient.volume=.22;}this.apply();}catch{}}
+ apply(){if(this.ambient){if(this.settings.sound&&!document.hidden)this.ambient.play().catch(()=>{});else this.ambient.pause();}if(this.timer)clearInterval(this.timer);this.timer=null;if(this.settings.music&&this.ctx&&!document.hidden)this.timer=setInterval(()=>this.music(),520);}
+ note(freq,duration=.2,volume=.035,type='sine',delay=0){if(!this.ctx||this.ctx.state!=='running')return;const t=this.ctx.currentTime+delay,o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(volume,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+duration+.05);}
+ music(){const melody=[293.66,0,440,523.25,0,392,329.63,0,261.63,0,392,493.88,440,0,329.63,0,246.94,0,369.99,440,0,329.63,293.66,0,220,0,329.63,392,440,0,293.66,0];let i=this.step++%melody.length;if(melody[i])this.note(melody[i],1.6,.016);if(i%8===0)this.note([146.83,130.81,123.47,110][Math.floor(i/8)],3.8,.012,'triangle');}
+ effect(name){if(!this.settings.sound)return;if(name==='hit'){this.note(150,.1,.05,'triangle');this.note(90,.2,.05);}else if(name==='win'||name==='relic'){[440,554.37,659.25,880].forEach((f,i)=>this.note(f,.5,.04,'sine',i*.1));}else if(name==='wrong'){this.note(196,.35,.035,'triangle');this.note(185,.3,.02,'sine',.12);}else{this.note(660,.1,.025);this.note(880,.2,.015,'sine',.07);}}
+ pause(){if(this.timer)clearInterval(this.timer);this.timer=null;this.ambient?.pause();this.ctx?.suspend();}
+}

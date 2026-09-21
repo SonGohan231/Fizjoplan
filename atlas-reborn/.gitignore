@@ -1,0 +1,11 @@
+node_modules/
+build/
+dist/
+android/.gradle/
+android/local.properties
+android/app/build/
+android/app/src/main/assets/
+tests/screenshots/
+*.p12
+*.jks
+*password*

@@ -1,0 +1,31 @@
+name: Atlas Reborn QA
+on:
+  push:
+    branches: ['codex/atlas-echa-ruchu']
+    paths: ['atlas-reborn/**', '.github/workflows/atlas-reborn.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: atlas-reborn
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - run: npm install --no-save playwright@1.58.2
+      - run: npx playwright install --with-deps chromium
+      - run: python3 -m http.server 8766 > /tmp/atlas-server.log 2>&1 &
+      - run: node tests/browser-qa.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-browser-qa
+          path: atlas-reborn/tests/screenshots/

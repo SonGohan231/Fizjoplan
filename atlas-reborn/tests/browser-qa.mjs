@@ -1,0 +1,29 @@
+import {chromium} from 'playwright';import {mkdir,writeFile} from 'node:fs/promises';import assert from 'node:assert/strict';
+import {CONCEPTS,ORDERS} from '../src/content.js';
+await mkdir('tests/screenshots',{recursive:true});
+const browser=await chromium.launch({headless:true});const errors=[],results=[];
+const context=await browser.newContext({viewport:{width:1000,height:600}});const page=await context.newPage();
+page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400&&!r.url().includes('favicon'))errors.push(r.status()+' '+r.url());});
+const state=()=>page.evaluate(()=>window.atlasState());
+async function shot(name){await page.screenshot({path:'tests/screenshots/'+name+'.png'});}
+async function axis(key,coordinate,target){await page.keyboard.down(key);const direction=['a','w'].includes(key)?-1:1;let reached=false;for(let n=0;n<120;n++){await page.waitForTimeout(50);const p=(await state()).position;if(direction<0?p[coordinate]<=target:p[coordinate]>=target){reached=true;break;}}await page.keyboard.up(key);assert.ok(reached,`Movement ${key} to ${coordinate}=${target}`);}
+async function walkToEnemy(){await axis('a','x',6.1);await axis('w','y',6.1);await axis('d','x',11);await page.getByRole('button',{name:/Podejmij walkę|Zmierz się ze Strażnikiem/}).click();await page.waitForTimeout(200);assert.ok((await state()).profile.run.battle);}
+async function fight(){let n=0;while((await state()).profile.run?.battle&&n++<70){let s=await state(),b=s.profile.run.battle;if(b.feedback){await page.getByRole('button',{name:'Wróć do walki'}).click();continue;}if(b.quiz){const q=b.quiz,c=CONCEPTS.find(c=>c.id===q.id);if(q.type==='choice')await page.locator('[data-action="answer:'+q.options.indexOf(c.answer)+'"]').click();else if(q.type==='recall'){await page.getByLabel('Twoja odpowiedź').fill(c.answer);await page.getByRole('button',{name:'Sprawdź odpowiedź',exact:true}).click();}else{for(const item of ORDERS[s.profile.run.world].steps)await page.getByRole('button',{name:item,exact:true}).click();await page.getByRole('button',{name:'Sprawdź sekwencję'}).click();}continue;}
+ const analysis=page.locator('[data-action="analysis"]');if(await analysis.isEnabled()){await analysis.click();continue;}
+ if(s.profile.run.hp<50&&s.profile.run.potions){await page.locator('[data-action="potion"]').click();}else if(b.intent==='heavy'){await page.locator('[data-action="guard"]').click();}else if(await page.locator('[data-action="tech"]').isEnabled()){await page.locator('[data-action="tech"]').click();}else await page.locator('[data-action="attack"]').click();await page.waitForTimeout(400);}
+ assert.ok(n<70,'Battle terminates');}
+try{
+ await page.goto('http://127.0.0.1:8766');await page.locator('#boot').waitFor({state:'detached'});await shot('01-title');
+ await page.getByRole('button',{name:'Rozpocznij podróż'}).click();await page.locator('[data-action="class:guardian"]').click();await page.waitForTimeout(600);await shot('02-world');assert.equal((await state()).profile.run.world,'bones');results.push('Boot and touch-sized start flow');
+ await axis('a','x',6.1);const x=(await state()).position.x;await page.waitForTimeout(400);assert.ok(Math.abs((await state()).position.x-x)<.03);await axis('w','y',6.1);await axis('d','x',11);await page.locator('[data-action="interact"]').click();await shot('03-battle');
+ await page.locator('[data-action="analysis"]').click();await shot('04-analysis');let q=(await state()).profile.run.battle.quiz;const c=CONCEPTS.find(c=>c.id===q.id);await page.locator('[data-action="answer:'+q.options.indexOf(c.answer)+'"]').click();await shot('05-explanation');await page.getByRole('button',{name:'Wróć do walki'}).click();await fight();results.push('Movement release, enemy interaction, knowledge, combat victory');
+ // Complete the remaining four rooms through real inputs and transitions.
+ for(let stage=0;stage<4;stage++){
+  await axis('d','x',12);await axis('w','y',4.15);await page.locator('[data-action="interact"]').click();await page.locator('[data-action="route:rest"]').click();await walkToEnemy();await fight();
+ }
+ assert.equal((await state()).modal,'summary');await shot('06-complete-run');assert.equal((await state()).profile.unlocked,1);await page.locator('[data-action="home"]').click();await page.reload();await page.locator('#boot').waitFor({state:'detached'});assert.equal((await state()).profile.unlocked,1);results.push('Five-room campaign, boss, ending, unlock, reload persistence');
+ await page.getByRole('button',{name:'Kontynuuj podróż'}).click();await page.setViewportSize({width:844,height:390});await page.waitForTimeout(500);await shot('07-mobile-landscape');
+ await page.locator('[data-action="worlds"]').click();await shot('08-world-selection-mobile');await page.locator('[data-action="close"]').click();
+ await page.setViewportSize({width:390,height:844});await page.waitForTimeout(500);await shot('09-portrait');await page.locator('[data-action="atlas"]').click();await shot('10-atlas');assert.ok(await page.locator('.atlas-list details').count()===64);results.push('Landscape and portrait UI; atlas entries');
+ assert.deepEqual(errors,[]);await writeFile('tests/screenshots/REPORT.json',JSON.stringify({passed:true,results,errors},null,2));
+}catch(e){await shot('ERROR');await writeFile('tests/screenshots/REPORT.json',JSON.stringify({passed:false,error:e.message,results,errors,state:await state().catch(()=>null)},null,2));throw e;}finally{await browser.close();}
