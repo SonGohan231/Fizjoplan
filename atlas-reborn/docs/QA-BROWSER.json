@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "results": [
+    "Boot and touch-sized start flow",
+    "Real touch joystick movement and release",
+    "Movement release, enemy interaction, knowledge, combat victory",
+    "Five-room campaign, boss, ending, unlock, reload persistence",
+    "Landscape and portrait UI; atlas entries"
+  ],
+  "errors": []
+}

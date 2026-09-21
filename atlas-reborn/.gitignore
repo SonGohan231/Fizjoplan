@@ -9,3 +9,4 @@ tests/screenshots/
 *.p12
 *.jks
 *password*
+tests/android-results/
