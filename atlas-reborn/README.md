@@ -31,3 +31,5 @@ To pierwsze wydanie nowej gry, nie produkcja o skali komercyjnego MMORPG. RPG/MM
 ## Pochodzenie
 
 Grafiki: wygenerowane dla tej gry dostępnym generatorem obrazów. Higgsfield odmówił żądania z powodu poziomu planu; nie przypisujemy mu tych grafik. Ambient: Mirelo, job `93ed2b470b8f466788209b6f271eefc0`. Phaser 3.90.0: MIT, licencja w `vendor/PHASER-LICENSE.txt`. Pytania są krótkimi autorskimi opracowaniami faktów; źródła odniesienia wskazano w `src/content.js`.
+
+Android WebView wymaga uprawnienia INTERNET, aby nie blokował obrazów CSS pod lokalnym adresem HTTPS. Wszystkie żądania aplikacji są przechwytywane: własny host korzysta z plików APK, a pozostałe adresy są odrzucane. Gra działa bez połączenia.

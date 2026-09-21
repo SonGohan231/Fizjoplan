@@ -11,7 +11,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-/** Offline game host. No network permission, no external navigation, scoped document export. */
+/** Offline game host. All content intercepted locally, no external navigation, scoped document export. */
 public final class MainActivity extends Activity {
  private static final String HOST="appassets.androidplatform.net";
  private static final int IMPORT=10,EXPORT=11;
@@ -22,7 +22,7 @@ public final class MainActivity extends Activity {
   super.onCreate(state);web=new WebView(this);setContentView(web);
   getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
   web.setBackgroundColor(0xff081b23);WebView.setWebContentsDebuggingEnabled(false);
-  WebSettings s=web.getSettings();s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(true);s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);s.setMediaPlaybackRequiresUserGesture(false);s.setSupportZoom(false);
+  WebSettings s=web.getSettings();s.setJavaScriptEnabled(true);s.setBlockNetworkLoads(false);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(true);s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);s.setMediaPlaybackRequiresUserGesture(false);s.setSupportZoom(false);
   if(android.os.Build.VERSION.SDK_INT>=28){getWindow().getAttributes().layoutInDisplayCutoutMode=android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;}
   web.setWebViewClient(new WebViewClient(){
    @Override public boolean shouldOverrideUrlLoading(WebView v,WebResourceRequest r){return !HOST.equals(r.getUrl().getHost());}
